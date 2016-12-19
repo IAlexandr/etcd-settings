@@ -17,5 +17,6 @@ module.exports = {
     accessKeyId: '4I93XTM0WB8UBX73R7J9',
     secretAccessKey: 'qwhS5T6AeMKAktqU2wDWL4wGXLPmhU0Gnf5YAysO',
     endpoint: 'http://10.10.10.242:7480',
+    bucket: 'TESTING'
   }
 };
