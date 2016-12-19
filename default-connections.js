@@ -1,11 +1,14 @@
 module.exports = {
-  amqpConn: {
+  amqp: {
     url: '10.10.10.20'
   },
-  dbConn: {
-    dialect: 'postgres',
-    host: '10.10.10.20',
-    port: '5432',
+  db: {
+    options: {
+      dialect: 'postgres',
+      host: '10.10.10.20',
+      port: '5432',
+      logging: false
+    },
     username: 'docker',
     password: 'docker',
     dbName: 'cameraserver'
