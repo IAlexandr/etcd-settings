@@ -2,7 +2,7 @@ const version = require('./package.json').version;
 const optionsSpec = {
   ETCD_CONN: {
     required: true,
-    default: 'http://10.10.10.20:2379',
+    default: 'http://localhost:2379',
     env: 'ETCD_SETTINGS_ETCD_CONN'
   },
 };
