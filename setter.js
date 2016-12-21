@@ -3,10 +3,9 @@ import async from 'async';
 import options from './options';
 var etcd = new Bletcd({ url: options.ETCD_CONN });
 
-function setNodeFunc (conn, value) {
+function setNodeFunc ({ path, value, options }) {
   return (callback) => {
-    const path = `/connections/${conn}`;
-    etcd.put(path, value, {}, (err, response) => {
+    etcd.put(path, value, options, (err, response) => {
       if (err) {
         console.error(`Failed put ${path}`, err);
         return callback(err);
@@ -19,8 +18,12 @@ function setNodeFunc (conn, value) {
 
 export default function (connections = {}) {
   return new Promise((resolve, reject) => {
-    const funcs = Object.keys(connections).map(conn => {
-      return setNodeFunc(conn, JSON.stringify(connections[conn]));
+    const funcs = Object.keys(connections).map(path => {
+      return setNodeFunc({
+        path,
+        value: JSON.stringify(connections[path].value),
+        options: connections[path].options || {}
+      });
     });
     async.waterfall(funcs, (err) => {
       if (err) {
