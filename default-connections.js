@@ -25,6 +25,11 @@ module.exports = {
       bucket: 'DASH'
     }
   },
+  '/connections/localStore': {
+    value: {
+      folderPath: 'C:/GEOWORKS-CCTV/archive', // hours
+    }
+  },
   '/connections/redis': {
     value: {
       host: '10.157.212.15',
@@ -35,7 +40,7 @@ module.exports = {
     value: {
       sessionMaxAge: '39600', // 11h, (seconds 3600 = 1h)
       cacheTtl: 60, // seconds 3600 = 1h
-      pingInterval: 60,
+      pingInterval: 10,
     }
   },
   '/settings/sysms': {
@@ -45,10 +50,10 @@ module.exports = {
   },
   '/settings/general': {
     value: {
-      archiveStoreType: 'local',
+      archiveStoreType: 'localStore',
       /* archiveStoreType: Тип хранения архива.
       * local - локально в папке, (путь указывается в reg)
-      * ceph - настройки берутся из connections/s3
+      * s3 - настройки берутся из connections/s3
       * */
     }
   },
