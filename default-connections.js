@@ -1,19 +1,19 @@
 module.exports = {
   '/connections/amqp': {
     value: {
-      url: '10.157.212.14'
+      url: '10.***.14'
     }
   },
   '/connections/db': {
     value: {
       options: {
         dialect: 'postgres',
-        host: '10.157.212.13',
+        host: '***',
         port: '5432',
         logging: false
       },
       username: 'user',
-      password: 'user21',
+      password: 'lalala',
       dbName: 'cameraserver'
     }
   },
@@ -21,19 +21,20 @@ module.exports = {
     value: {
       accessKeyId: 'MEG3MWFU1H3ADK0SRCAX',
       secretAccessKey: 'HVq85eQiN4WQp2YrzSzx6IBAYXCI09jH1zOfQiJY',
-      endpoint: 'http://10.157.212.10:7480',
-      bucket: 'DASH'
+      endpoint: 'http://***:7480',
+      bucket: 'lalala'
     }
   },
   '/connections/localStore': {
     value: {
-      folderPath: 'C:/GEOWORKS-CCTV/archive', // hours
+      folderPath: 'C:/archive', // hours
     }
   },
   '/connections/redis': {
     value: {
-      host: '10.157.212.15',
-      port: '6379'
+      host: '10.***.15',
+      port: '6379',
+      password: 'lalala'
     }
   },
   '/settings/regs': {
