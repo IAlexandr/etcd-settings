@@ -1,0 +1,29 @@
+docker-compose scale app=5
+
+docker-compose -f .\docker-compose-monitor.yml up -d
+
+
+docker-compose up --no-recreate -d
+
+
+container_label_org_label_schema_group
+
+
+container_last_seen{container_label_org_label_schema_group=~"cctv.+"}
+
+container_last_seen{container_label_org_label_schema_group=~"cctv.+"}
+
+
+absent(container_last_seen{name=~"r.+"}) or ON(name) (time() - container_last_seen{name=~"r.+"} > 120)
+
+
+absent(((time() - container_last_seen{name="redis"}) < 5)) FOR 15s
+
+ALERT r_down
+  IF absent((time() - container_last_seen{name="redis"}) < 120)
+  FOR 30s
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary= "Redis r_down {{$labels.instance}}",
+    description= "R container is down for more than 30 seconds."
+  }

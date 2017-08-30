@@ -1,0 +1,121 @@
+# REDIS ------------------------------------------
+ALERT redis_down
+  IF absent(container_memory_usage_bytes{name="redis"})
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary= "REDIS down",
+    description= "REDIS container is down for more than 30 seconds."
+  }
+
+ ALERT redis_high_cpu
+  IF sum(rate(container_cpu_usage_seconds_total{name="redis"}[1m])) / count(node_cpu{mode="system"}) * 100 > 4
+  FOR 1m
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+    summary= "REDIS high CPU usage",
+    description= "REDIS CPU usage is {{ humanize $value}}%."
+  }
+
+ALERT redis_high_memory
+  IF sum(container_memory_usage_bytes{name="redis"}) > 6000000000
+  FOR 30s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+      summary = "REDIS high memory usage",
+      description = "REDIS memory consumption is at {{ humanize $value}}.",
+  }
+  
+ALERT redis_high_network_receive
+  IF sum(rate(container_network_receive_bytes_total{name="redis"}[15s])) > 100000000
+  FOR 30s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+      summary = "REDIS high network receive",
+      description = "REDIS network received consumption is at {{ humanize $value}}.",
+  }
+  
+ALERT redis_high_network_transmit
+  IF sum(rate(container_network_transmit_bytes_total{name="redis"}[15s])) > 100000000
+  FOR 30s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+      summary = "REDIS high network transmit",
+      description = "REDIS network transmitted consumption is at {{ humanize $value}}.",
+  }
+
+# RABBITMQ ----------------------------------------
+
+ALERT rabbitmq_down
+  IF absent(container_memory_usage_bytes{name="rabbitmq"})
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary= "REDIS down",
+    description= "REDIS container is down for more than 30 seconds."
+  }
+
+ ALERT rabbitmq_high_cpu
+  IF sum(rate(container_cpu_usage_seconds_total{name="rabbitmq"}[1m])) / count(node_cpu{mode="system"}) * 100 > 2
+  FOR 1m
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+    summary= "rabbitmq high CPU usage",
+    description= "rabbitmq CPU usage is {{ humanize $value}}%."
+  }
+  
+# POSTGIS ----------------------------------------
+
+ALERT postgis_down
+  IF absent(container_memory_usage_bytes{name="postgis"})
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary= "postgis down",
+    description= "postgis container is down for more than 30 seconds."
+  }
+
+ ALERT postgis_high_cpu
+  IF sum(rate(container_cpu_usage_seconds_total{name="postgis"}[1m])) / count(node_cpu{mode="system"}) * 100 > 2
+  FOR 1m
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+    summary= "postgis high CPU usage",
+    description= "postgis CPU usage is {{ humanize $value}}%."
+  }
+  
+ALERT postgis_high_memory
+  IF sum(container_memory_usage_bytes{name="postgis"}) > 6000000000
+  FOR 30s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+      summary = "postgis high memory usage",
+      description = "postgis memory consumption is at {{ humanize $value}}.",
+  }
+  
+# ETCD ----------------------------------------
+
+ALERT etcd_down
+  IF absent(container_memory_usage_bytes{name="etcd"})
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary= "etcd down",
+    description= "etcd container is down for more than 30 seconds."
+  }
+
+ ALERT postgis_high_cpu
+  IF sum(rate(container_cpu_usage_seconds_total{name="etcd"}[1m])) / count(node_cpu{mode="system"}) * 100 > 2
+  FOR 1m
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+    summary= "etcd high CPU usage",
+    description= "etcd CPU usage is {{ humanize $value}}%."
+  }
+  
+ALERT postgis_high_memory
+  IF sum(container_memory_usage_bytes{name="etcd"}) > 600000000
+  FOR 30s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+      summary = "etcd high memory usage",
+      description = "etcd memory consumption is at {{ humanize $value}}.",
+  }
+
+  

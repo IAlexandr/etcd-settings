@@ -1,0 +1,51 @@
+version: '2'
+networks:
+  monitor-net:
+    driver: bridge
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+services:
+  prometheus:
+    image: "prom/prometheus"
+    container_name: prometheus
+    volumes:
+      - "f:/helpers/docker/prometheus:/etc/prometheus"
+      - prometheus_data:/prometheus
+    command:
+      - '-config.file=/etc/prometheus/prometheus.yml'
+      - '-storage.local.path=/prometheus'
+      - '-alertmanager.url=http://alertmanager:9093'
+      - '-storage.local.memory-chunks=100000'
+    restart: always
+    ports:
+      - "9090:9090"
+    depends_on:
+    - "alertmanager"
+    networks:
+      - monitor-net
+  alertmanager:
+    image: "prom/alertmanager"
+    container_name: alertmanager
+    volumes: 
+      - "f:/helpers/docker/alertmanager:/etc/alertmanager"
+    command:
+      - '-config.file=/etc/alertmanager/config.yml'
+      - '-storage.path=/alertmanager'
+    restart: always
+    ports:
+      - "9093:9093"
+    networks:
+      - monitor-net
+  grafana:
+    image: "grafana/grafana"
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=changeme
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: always
+    ports:
+      - "3333:3000"
+    networks:
+      - monitor-net

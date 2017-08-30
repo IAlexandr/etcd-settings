@@ -1,0 +1,48 @@
+version: '2'
+services:
+
+  postgis:
+    image: "mdillon/postgis"
+    container_name: postgis
+    hostname: postgis
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user21
+      POSTGRES_DB: video_portal
+    ports:
+     - "5432:5432"
+    volumes:
+     - /var/lib/postgresql:/var/lib/postgresql
+    labels:
+      org.label-schema.group: "cctv-dependence"
+  redis:
+    image: "redis"
+    command: redis-server --requirepass redis21
+    container_name: redis
+    restart: always
+    ports:
+     - "6379:6379"
+    labels:
+      org.label-schema.group: "cctv-dependence"
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    ports:
+       - "5672:5672"
+       - "15672:15672"
+    labels:
+      org.label-schema.group: "cctv-dependence"
+  etcd:
+    image: "elcolio/etcd"
+    container_name: etcd
+    restart: always
+    ports:
+     - "2379:2379"
+     - "2380:2380"
+     - "4001:4001"
+     - "7001:7001"
+    labels:
+      org.label-schema.group: "cctv-dependence"
